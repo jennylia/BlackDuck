@@ -109,7 +109,8 @@ public class DataAnalyze {
 			current_uuid_entries = new ArrayList<String>();
 			current_uuid_entries.add(uuid);
 		}
-		dns_to_uuid_graph.put(uuid, current_uuid_entries);
+		dns_to_uuid_graph.put(dns, current_uuid_entries);
+//		printGraph(dns_to_uuid_graph);
 		
 	}
 	
