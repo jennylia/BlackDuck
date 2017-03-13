@@ -21,9 +21,11 @@ public class DataAnalyze {
 		String line = "";
 		String cvsSplitBy = ";";
 
+		HashMap<String, Integer> uuid_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> dws_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> dns_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> so_map = new HashMap<String, Integer>();
+		HashMap<String, Integer> version_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> license_map = new HashMap<String, Integer>();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -32,13 +34,29 @@ public class DataAnalyze {
 
 				// use comma as separator
 				String[] entry = line.split(cvsSplitBy);
+				
+				//UUDI
+				String uuid = entry[0];
+				populateHashMap(uuid_map, uuid);
 
 				//DWS
 				String dws = entry[1];
 				populateHashMap(dws_map, dws);
 				
+				//DNS
+				String dns = entry[2];
+				populateHashMap(dns_map, dws);
+				
+				//SO
+				String so = entry[3];
+				populateHashMap(so_map, so);
+				
+				//Version
+				String version = entry[4];
+				populateHashMap(version_map, version);
+				
 				//License_ID
-				String license_id = entry[4];
+				String license_id = entry[5];
 				populateHashMap(license_map, license_id);
 
 				// System.out.println(" [d_r_uuid = " + entry[0]
@@ -46,7 +64,7 @@ public class DataAnalyze {
 				// + " , dns=" + entry[2]
 				// + " , so=" + entry[3]
 				// + " , version=" + entry[4]
-				// + " , license_id=" + entry[4]
+				// + " , license_id=" + entry[5]
 				// + "]");
 
 			}
@@ -57,7 +75,11 @@ public class DataAnalyze {
 
 		// Find out what is the most popular version we have?
 
+		printMostPoluarItem(uuid_map, "uuid");
 		printMostPoluarItem(dws_map, "dws_map");
+		printMostPoluarItem(dns_map, "dns_map");
+		printMostPoluarItem(so_map, "so_map");
+		printMostPoluarItem(version_map, "version");
 		printMostPoluarItem(license_map, "license_id");
 
 	}
@@ -80,15 +102,15 @@ public class DataAnalyze {
 				String popular_name = "demo";
 				while (convertedSetIterator.hasNext()) {
 					Map.Entry setEntry = (Map.Entry) convertedSetIterator.next();
-					System.out.print("Key is: " + setEntry.getKey() + " & Value is: ");
-					System.out.println(setEntry.getValue());
+//					System.out.print("Key is: " + setEntry.getKey() + " & Value is: ");
+//					System.out.println(setEntry.getValue());
 					
 					if ((int) setEntry.getValue() > popular_count){
 						popular_count = (int) setEntry.getValue();
 						popular_name = (String) setEntry.getKey();
 					}
 				}
-				System.out.println("Most popular " + printName + " item is: " + popular_name + "with:" + popular_count);
+				System.out.println("Most popular " + printName + " item is: " + popular_name + " with:" + popular_count);
 	}
 
 }
