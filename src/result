@@ -1,0 +1,15 @@
+For sample data
+Most popular uuid item is: "2ff38a7c-238b-487f-af9b-64a2ec81d81c" with:150
+Most popular dws_map item is: "f6577cf7622d8ddbc3e7379f62a2f89c" with:30
+Most popular dns_map item is: "f6577cf7622d8ddbc3e7379f62a2f89c" with:30
+Most popular so_map item is: "d41d8cd98f00b204e9800998ecf8427e" with:599
+Most popular version item is: "8u72-b15" with:150
+Most popular license_id item is: 45 with:269
+
+For real data:
+Most popular uuid item is: "2ff38a7c-238b-487f-af9b-64a2ec81d81c" with:46680
+Most popular dws_map item is: "3724c22825aad4efd8c3e47c6b2b0ee7" with:1152
+Most popular dns_map item is: "3724c22825aad4efd8c3e47c6b2b0ee7" with:1152
+Most popular so_map item is: "d41d8cd98f00b204e9800998ecf8427e" with:1762470
+Most popular version item is: "5.0.1" with:56580
+Most popular license_id item is: 45 with:440977
