@@ -24,7 +24,6 @@ public class DataAnalyze {
 		HashMap<String, Integer> dws_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> dns_map = new HashMap<String, Integer>();
 		HashMap<String, Integer> so_map = new HashMap<String, Integer>();
-
 		HashMap<String, Integer> license_map = new HashMap<String, Integer>();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -36,23 +35,11 @@ public class DataAnalyze {
 
 				//DWS
 				String dws = entry[1];
-				if (dws_map.containsKey(dws)) {
-					int cur_val = dws_map.get(dws);
-					int new_val = cur_val + 1;
-					dws_map.put(dws, new_val);
-				} else {
-					dws_map.put(dws, 1);
-				}
+				populateHashMap(dws_map, dws);
 				
 				//License_ID
 				String license_id = entry[4];
-				if (license_map.containsKey(license_id)) {
-					int cur_val = license_map.get(license_id);
-					int new_val = cur_val + 1;
-					license_map.put(license_id, new_val);
-				} else {
-					license_map.put(license_id, 1);
-				}
+				populateHashMap(license_map, license_id);
 
 				// System.out.println(" [d_r_uuid = " + entry[0]
 				// + " , dws=" + entry[1]
@@ -69,11 +56,21 @@ public class DataAnalyze {
 		}
 
 		// Find out what is the most popular version we have?
-		System.out.println(license_map.size());
 
+		printMostPoluarItem(dws_map, "dws_map");
 		printMostPoluarItem(license_map, "license_id");
+
 	}
 	
+	public static void populateHashMap(HashMap map_param, String key_param){
+		if (map_param.containsKey(key_param)) {
+			int cur_val = (int) map_param.get(key_param);
+			int new_val = cur_val + 1;
+			map_param.put(key_param, new_val);
+		} else {
+			map_param.put(key_param, 1);
+		}
+	}
 	public static void printMostPoluarItem(HashMap hashmap_param, String printName ){
 		// Iterators in HashTable
 				Set convertedSet = hashmap_param.entrySet();
