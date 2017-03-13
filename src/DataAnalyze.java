@@ -17,8 +17,10 @@ public class DataAnalyze {
 	static HashMap<String, Integer> version_map = new HashMap<String, Integer>();
 	static HashMap<String, Integer> license_map = new HashMap<String, Integer>();
 
-	
-	static HashMap<String, ArrayList<String>> uuid_graph = new  HashMap<String, ArrayList<String>>();
+	//Adjacency list representation
+	static HashMap<String, ArrayList<String>> uuid_to_dns_graph = new  HashMap<String, ArrayList<String>>();
+	static HashMap<String, ArrayList<String>> dns_to_uuid_graph = new  HashMap<String, ArrayList<String>>();
+
 	public static void main(String[] args) {
 		// d_r_uuid object
 		// dws object
@@ -51,19 +53,9 @@ public class DataAnalyze {
 				// + " , version=" + entry[4]
 				// + " , license_id=" + entry[5]
 				// + "]");
-				String uuid = entry[0];
-				String dns = entry[1];
 				
-				//Find out what the uuid currently has
-				ArrayList<String> current_dws_entries;
-				if (uuid_graph.containsKey(uuid)){
-					current_dws_entries = uuid_graph.get(uuid);
-					current_dws_entries.add(dns);
-				}else{
-					current_dws_entries = new ArrayList<String>();
-					current_dws_entries.add(dns);
-				}
-				uuid_graph.put(uuid, current_dws_entries);
+				populate_uuid_to_dns_graph(entry);
+				populate_dns_to_uuid_graph(entry);
 
 
 			}
@@ -76,10 +68,52 @@ public class DataAnalyze {
 
 		printMostPoluarItems();
 		
-		printGraph(uuid_graph);
+//		printGraph(uuid_to_dns_graph);
+		printGraph(dns_to_uuid_graph);
 		
+		System.out.println(uuid_to_dns_graph.size());
+		System.out.println(dns_to_uuid_graph.size());
 
+//		System.out.println(uuid_to_dns_graph.get("09212528-db03-4fa1-8aa1-993a848d557c"));
+//		System.out.println(dns_to_uuid_graph.get("bddc368dcc9f1b87c685dc1e828dfa03"));
 	}
+
+	private static void populate_uuid_to_dns_graph(String[] entry) {
+		String uuid = entry[0];
+		String dns = entry[1];
+		
+		//Building it for uuid_to_dns
+		ArrayList<String> current_dns_entries;
+		if (uuid_to_dns_graph.containsKey(uuid)){
+			current_dns_entries = uuid_to_dns_graph.get(uuid);
+			current_dns_entries.add(dns);
+		}else{
+			current_dns_entries = new ArrayList<String>();
+			current_dns_entries.add(dns);
+		}
+		uuid_to_dns_graph.put(uuid, current_dns_entries);
+		
+	}
+	
+
+	private static void populate_dns_to_uuid_graph(String[] entry) {
+		String uuid = entry[0];
+		String dns = entry[1];
+		
+		//Building it for uuid_to_dns
+		ArrayList<String> current_uuid_entries;
+		if (dns_to_uuid_graph.containsKey(dns)){
+			current_uuid_entries = dns_to_uuid_graph.get(dns);
+			current_uuid_entries.add(uuid);
+		}else{
+			current_uuid_entries = new ArrayList<String>();
+			current_uuid_entries.add(uuid);
+		}
+		dns_to_uuid_graph.put(uuid, current_uuid_entries);
+		
+	}
+	
+	
 
 	private static void printMostPoluarItems() {
 		// TODO Auto-generated method stub
