@@ -1,6 +1,7 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +29,14 @@ public class DataAnalyze {
 		// so object
 		// version object
 		// license_id int64
-		String testFile = "/Users/jennylian/BlackDuck/sample.csv";
-		String dataFile = "/Users/jennylian/BlackDuck/ubc_data_workshop.csv";
+
+        String sampleFile = new File("").getAbsolutePath().concat("/data/sample.csv");
+        // cannot upload the real data file in project folder... git upload capacity exceeds
+        // String dataFile = new File("").getAbsolutePath().concat("/data/ubc_data_workshop.csv");
+
+        //String testFile = "/Users/jennylian/BlackDuck/sample.csv";
+		//String dataFile = "/Users/jennylian/BlackDuck/ubc_data_workshop.csv";
+
 		String line = "";
 		String cvsSplitBy = ";";
 		
@@ -37,7 +44,7 @@ public class DataAnalyze {
 		
 
 		// Let's build some graphs....
-		try (BufferedReader br = new BufferedReader(new FileReader(testFile))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(sampleFile))) {
 
 			while ((line = br.readLine()) != null) {
 
@@ -117,7 +124,6 @@ public class DataAnalyze {
 	
 
 	private static void printMostPoluarItems() {
-		// TODO Auto-generated method stub
 		printMostPoluarItem(uuid_map, "uuid");
 		printMostPoluarItem(dws_map, "dws_map");
 		printMostPoluarItem(dns_map, "dns_map");
@@ -127,7 +133,6 @@ public class DataAnalyze {
 	}
 
 	public static void populateAllHashMap(String[] entry) {
-		// TODO Auto-generated method stub
 		// UUDI
 		String uuid = entry[0];
 		populateHashMap(uuid_map, uuid);
