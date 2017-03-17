@@ -14,9 +14,6 @@ public class DataAnalyze {
 	static HashMap<String, Integer> version_map = new HashMap<String, Integer>();
 	static HashMap<String, Integer> license_map = new HashMap<String, Integer>();
 
-    // TODO update these
-    static HashMap<String, ArrayList<String>> uuid_to_dns_graph = new  HashMap<String, ArrayList<String>>();
-    static HashMap<String, ArrayList<String>> dns_to_uuid_graph = new  HashMap<String, ArrayList<String>>();
     static HashMap<String, Set<String>> graph = new  HashMap<String, Set<String>>();
 
 
@@ -33,14 +30,9 @@ public class DataAnalyze {
         // !! cannot upload the real data file in project folder... git upload capacity exceeds
         // String dataFile = new File("").getAbsolutePath().concat("/data/ubc_data_workshop.csv");
 
-        //String testFile = "/Users/jennylian/BlackDuck/sample.csv";
-		//String dataFile = "/Users/jennylian/BlackDuck/ubc_data_workshop.csv";
-
 		String line = "";
 		String cvsSplitBy = ";";
 
-		//err... let's build some graphs... for each uuid, what type of dws_map value can it have?
-		
 
 		try (BufferedReader br = new BufferedReader(new FileReader(sampleFile))) {
 
@@ -51,22 +43,7 @@ public class DataAnalyze {
 				String[] entry = line.split(cvsSplitBy);
 
 				populateAllHashMap(entry);
-
-				// System.out.println(" [d_r_uuid = " + entry[0]
-				// + " , dws=" + entry[1]
-				// + " , dns=" + entry[2]
-				// + " , so=" + entry[3]
-				// + " , version=" + entry[4]
-				// + " , license_id=" + entry[5]
-				// + "]");
-
-                // TODO update these
-				//populate_uuid_to_dns_graph(entry);
-				//populate_dns_to_uuid_graph(entry);
-                //populate_graph(entry, "uuid", "dns");
                 populate_graph(entry, "dns", "uuid");
-
-
 			}
 
 		} catch (IOException e) {
@@ -74,22 +51,15 @@ public class DataAnalyze {
 		}
 
 		// Find out what is the most popular version we have?
-		//printMostPoluarItems();
+		printMostPoluarItems();
 
 
         printGraph(graph);
         System.out.println(graph.size());
-//		printGraph(uuid_to_dns_graph);
-//		printGraph(dns_to_uuid_graph);
-//		System.out.println(uuid_to_dns_graph.size());
-//		System.out.println(dns_to_uuid_graph.size());
-
-//		System.out.println(uuid_to_dns_graph.get("09212528-db03-4fa1-8aa1-993a848d557c"));
-//		System.out.println(dns_to_uuid_graph.get("bddc368dcc9f1b87c685dc1e828dfa03"));
 	}
 
     /*
-    For each line of data, return the data value of the specified data type
+    	For each line of data, return the data value of the specified data type
      */
     private static String getDataValue (String[] entry, String dataType) {
 
@@ -112,11 +82,10 @@ public class DataAnalyze {
     }
 
     /*
-    from given data type of 'from' or 'to', it populate graph as map of key (from) and value (to)
+    	From given data type of 'from' or 'to', it populate graph as map of key (from) and value (to)
      */
 	private static void populate_graph(String[] entry, String from, String to) {
 
-        // TODO use HashMap
         String key = getDataValue(entry, from);
         String value = getDataValue(entry, to);
 
@@ -135,42 +104,6 @@ public class DataAnalyze {
         graph.put(key, current_entries);
 	}
 
-//    private static void populate_uuid_to_dns_graph(String[] entry) {
-//        String uuid = entry[0];
-//        String dns = entry[1];
-//
-//        //Building it for uuid_to_dns
-//        ArrayList<String> current_dns_entries;
-//        if (uuid_to_dns_graph.containsKey(uuid)){
-//            current_dns_entries = uuid_to_dns_graph.get(uuid);
-//            current_dns_entries.add(dns);
-//        }else{
-//            current_dns_entries = new ArrayList<String>();
-//            current_dns_entries.add(dns);
-//        }
-//        uuid_to_dns_graph.put(uuid, current_dns_entries);
-//
-//    }
-//
-//
-//	private static void populate_dns_to_uuid_graph(String[] entry) {
-//		String uuid = entry[0];
-//		String dns = entry[1];
-//
-//		//Building it for uuid_to_dns
-//		ArrayList<String> current_uuid_entries;
-//		if (dns_to_uuid_graph.containsKey(dns)){
-//			current_uuid_entries = dns_to_uuid_graph.get(dns);
-//			current_uuid_entries.add(uuid);
-//		}else{
-//			current_uuid_entries = new ArrayList<String>();
-//			current_uuid_entries.add(uuid);
-//		}
-//		dns_to_uuid_graph.put(dns, current_uuid_entries);
-////		printGraph(dns_to_uuid_graph);
-//
-//	}
-
 
 	private static void printMostPoluarItems() {
 		printMostPoluarItem(uuid_map, "uuid");
@@ -182,7 +115,7 @@ public class DataAnalyze {
 	}
 
     /*
-    Produce all the counts of unique element (e.g. uuid) in the data
+    	Produce all the counts of unique element (e.g. uuid) in the data
      */
 	public static void populateAllHashMap(String[] entry) {
 		// UUDI
