@@ -45,7 +45,7 @@ public class DataAnalyze {
 				String[] entry = line.split(cvsSplitBy);
 
 				populateAllHashMap(entry);
-				populate_graph(entry, "dws", "uuid");
+				populate_graph(entry, "dns", "dws");
 			}
 
 		} catch (IOException e) {
@@ -56,7 +56,7 @@ public class DataAnalyze {
 		// printMostPoluarItems();
 
 //		printGraph(graph, "dns", "uuid");
-		printGraph(graph, "dws", "uuid");
+		printGraph(graph, "dns", "dws");
 
 		System.out.println(graph.size());
 	}
