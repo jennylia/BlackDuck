@@ -44,7 +44,7 @@ public class DataAnalyze {
 
 				populateAllHashMap(entry);
                 populate_graph(entry, "dns", "uuid");
-			}
+            }
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class DataAnalyze {
 		printMostPoluarItems();
 
 
-        printGraph(graph);
+        printGraph(graph, "dns", "uuid");
         System.out.println(graph.size());
 	}
 
@@ -66,9 +66,9 @@ public class DataAnalyze {
         switch(dataType) {
             case "uuid":
                 return entry[0];
-            case "dns":
-                return entry[1];
             case "dws":
+                return entry[1];
+            case "dns":
                 return entry[2];
             case "so":
                 return entry[3];
@@ -83,6 +83,7 @@ public class DataAnalyze {
 
     /*
     	From given data type of 'from' or 'to', it populate graph as map of key (from) and value (to)
+    	and, remove any duplication
      */
 	private static void populate_graph(String[] entry, String from, String to) {
 
@@ -114,9 +115,6 @@ public class DataAnalyze {
 		printMostPoluarItem(license_map, "license_id");
 	}
 
-    /*
-    	Produce all the counts of unique element (e.g. uuid) in the data
-     */
 	public static void populateAllHashMap(String[] entry) {
 		// UUDI
 		String uuid = entry[0];
@@ -126,9 +124,9 @@ public class DataAnalyze {
 		String dws = entry[1];
 		countItemsHashMap(dws_map, dws);
 
-		// DNS
+        // DNS
 		String dns = entry[2];
-		countItemsHashMap(dns_map, dws);
+		countItemsHashMap(dns_map, dns);
 
 		// SO
 		String so = entry[3];
@@ -157,7 +155,7 @@ public class DataAnalyze {
 	}
 
     /*
-
+        find the item with most duplicate appearance in its column
      */
 	public static void printMostPoluarItem(HashMap hashmap_param, String printName) {
 		// Iterators in HashTable
@@ -177,8 +175,11 @@ public class DataAnalyze {
 		System.out.println("Most popular " + printName + " item is: " + popular_name + " with:" + popular_count);
 	}
 	
-	
-	public static void printGraph(HashMap hashmap_param) {
+
+    /*
+        print all from (key) and to (value) for given graph
+     */
+	public static void printGraph(HashMap hashmap_param, String from, String to) {
 		// Iterators in HashTable
 		Set convertedSet = hashmap_param.entrySet();
 		Iterator convertedSetIterator = convertedSet.iterator();
@@ -187,9 +188,23 @@ public class DataAnalyze {
 		String popular_name = "demo";
 		while (convertedSetIterator.hasNext()) {
 			Map.Entry setEntry = (Map.Entry) convertedSetIterator.next();
-			 System.out.print("Key is: " + setEntry.getKey() + " & Value is: ");
+			 System.out.print(from + ": " + setEntry.getKey() + ", " + to + ": ");
 			 System.out.println(setEntry.getValue());
 		}
 	}
+
+    /*
+        get keys with most common values
+     */
+    private static void getCommonValue (HashMap map) {
+
+        Iterator convertedSetIterator = map.entrySet().iterator();
+
+        while (convertedSetIterator.hasNext()) {
+            Map.Entry setEntry = (Map.Entry) convertedSetIterator.next();
+            System.out.println(setEntry.getValue());
+        }
+
+    }
 
 }
